@@ -1,0 +1,184 @@
+  <!DOCTYPE html>
+
+   <html>
+
+   	<head>
+
+		<title>Jean Noteris / Antoine Teboulle Summary</title>
+
+   		<link rel="stylesheet" type="text/css" href="/css/Register.css" media="all"/>
+
+   	</head>
+
+   	<body background="https://cdn.glitch.com/38b3d561-f00f-4e02-99c7-79a6f6e98038%2Fimagefond.jpg?1536241683553">
+
+         <ul>
+
+   		    <li><a href="/">Home</a></li>
+     		  <li><a href="/Questionnaire">Questionnaire</a></li>
+          <li><a href="/Register">Register</a></li>
+          <li><a href="/Login">Login</a></li>
+          <li style="float:right"><a class="active" href="/Contact">About</a></li>
+         </ul>
+
+         <br>
+         <br>
+         <br>
+
+         <style>
+            p { color: #FF0000; }
+            label { color: #FF0000; }
+         </style>
+
+     		<p>Please enter your personal informations :</p> <br>
+
+  <form method="post" onsubmit="return verifPassword(this)">
+
+      
+   		<label for="prenom">Login :</label>  
+   			<input type="text" name="prenom" id="prenom" placeholder="" size="30" maxlength="20" required="" onblur="verifPseudo(this)"/>
+
+   		<br><br>
+
+      
+   		<label for="password">Password :</label>
+   			<input type="password" name="password" id="password" placeholder="" size="30" maxlength="20" required="" onblur="verifPassword(this)"/>
+            
+         <br><br>
+
+         <label for="confpassword">Confirm password :</label>
+            <input type="password" name="confpassword" id="confpassword" placeholder="" size="30" maxlength="20" required="" onblur="verifPassword(this)"/>
+        
+         <br><br>
+
+         <label for="e-mail">Email adress :</label>  
+            <input type="e-mail" name="e-mail" id="e-mail" placeholder="" size="30" maxlength="30" required="" onblur="verifMail(this)"/>
+
+         <br><br>
+
+         <label for="age">Enter your date of birth :</label> 
+            <input type="date" name="age" id="age" placeholder="Ex : 12/09/1992" size="30" maxlength="10" required=""/>
+
+         <br><br><br>
+      
+         <p><input type="checkbox" name="accept" value="1"> I accept the terms and conditions</p>
+
+         <br><br>
+
+         <input type="submit" value="Submit">
+        
+    </form>
+      
+   	</body>	
+
+   	<script>
+
+   		function FocusFonction() {
+      			document.getElementById("focus").value = "";
+   		}
+   		
+   		function FocusoutFonction() {
+   			
+   			if (document.getElementById("focus").value == ""){
+      				document.getElementById("focus").value ="Entrez votre texte ici..." ;
+   			}
+   		}
+
+   		function surligne(champ, erreur){
+      			if(erreur)
+         			 champ.style.backgroundColor = "#fba";
+      			else
+         			 champ.style.backgroundColor = "#c4ffaa";
+   			}
+
+   		function verifPseudo(champ){
+
+      			if(champ.value.length < 2 || champ.value.length > 25){
+         			 surligne(champ, true);
+         			 return false;
+      			}
+
+      			else{
+         			 surligne(champ, false);
+         			 return true;
+      			}
+   		 }
+
+       function verifPassword(champ){
+
+            if(champ.password.value == '' || champ.confpassword.value == ''){
+               alert('Tous les champs ne sont pas remplis');
+               champ.password.focus();
+               surligne(champ, true);
+               return false;
+            }
+
+            else if (champ.password.value != champ.confpassword.value) {
+               alert('Ce ne sont pas les mêmes mots de passe!');
+               champ.password.focus();
+               surligne(champ, true);
+               return false;
+            }
+           
+            else if (champ.password.value == champ.confpassword.value) {
+               surligne(champ, false);
+               return true;
+            }
+           
+            else {
+               champ.password.focus();
+               return false;
+            }
+      }
+
+   		function verifMail(champ){
+      		var regex = /^[a-zA-Z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$/;
+      			
+      			if(!regex.test(champ.value)){
+         			surligne(champ, true);
+         			return false;
+      			}
+      			
+      			else{
+         			surligne(champ, false);
+         			return true;
+      			}
+   		}
+   		
+         function verifAge(champ){
+
+            var age = parseInt(champ.value);
+
+            if(isNaN(age) || age < 16) {
+               surligne(champ, true);
+               return false;
+            }
+            else
+            {
+               surligne(champ, false);
+               return true;
+            }
+         }
+
+   		function verifForm(f){
+
+      		var pseudoOk = verifPseudo(f.pseudo);
+      		var mailOk = verifMail(f.email);
+          var passwordOk = verifPassword(f.password);
+          var confpasswordOk = verifPassword(f.confpassword);
+          var ageOk = verifAge(f.age);
+      
+      			if(pseudoOk && mailOk && passwordOk && confpasswordOk)
+         			
+         			return true;
+      			
+      			else
+      			{
+         			alert("You must fill all the boxes");
+         			return false;
+      			}
+   		}
+
+   	</script>
+
+   </html>
